@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{% block title %} Déné shop {% endblock %}</title>
+</head>
+<body>
+<header>Notre entête</header>
+<nav>
+{% block nav %}
+<ul>
+<li><a href="{% url 'home' %}">Accueil</a></li>
+<li><a href="#">Nos produits</a> </li>
+<li><a href="#">Contact</a></li>
+<li><a href="#">A propos</a></li>
+</ul>
+{% endblock %}
+</nav>
+<section>
+{% block content %}
+Le contenu de ma page!
+{% endblock %}
+</section>
+<footer>
+<p> &copy; 2022-2023 Déné shop <br>
+Développé par Dr H. Kassogué, CEO de
+<a target="_blank" href="http://www.cfeco.ml/">CFECO</a></p>
+</footer>
+</body>
+</html>

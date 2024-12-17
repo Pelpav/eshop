@@ -1,9 +1,7 @@
-<html>
-    <head>
-        <title>M1 Eshop</title>
-    </head>
-    <body>
-        <h1>Bienvenu</h1>
-        {% lorem 1 b random %}
-    </body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Le nouveau titre ...{% endblock title %}
+
+{% block content %}
+    {% lorem 2 b random %}
+{% endblock content %}
