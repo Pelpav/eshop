@@ -10,3 +10,6 @@ def details(request):
 
 def shop(request):
     return render(request, 'front/shop.html', {})
+
+def cart(request):
+    return render(request, 'front/cart.html', {})
