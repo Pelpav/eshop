@@ -16,3 +16,6 @@ def cart(request):
 
 def checkout(request):
     return render(request, 'front/checkout.html', {})
+
+def contact(request):
+    return render(request, 'front/contact.html', {})
