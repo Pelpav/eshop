@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', include('admin_volt.urls')),
     path('', views.home, name='home'),
     path('details', views.details, name='details'),
+    path('shop', views.shop, name='shop'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

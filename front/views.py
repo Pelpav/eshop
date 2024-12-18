@@ -7,3 +7,6 @@ def home(request):
 
 def details(request):
     return render(request, 'front/details.html', {})
+
+def shop(request):
+    return render(request, 'front/shop.html', {})
