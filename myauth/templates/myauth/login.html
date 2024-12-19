@@ -1,0 +1,31 @@
+{% extends "base.html" %} {% load static %} {% block title %}Connexion{% endblock %}
+{% block extrastyle %}
+<link href="{% static 'css/auth.css' %}" rel="stylesheet" />
+{% endblock extrastyle %} {% block content %}
+<div class="body" style="background: url('{% static 'images/hero-bg.jpg' %}') no-repeat center center; background-size: cover;">
+  <div class="wrapper">
+    <form action="#">
+      <h2>Connexion</h2>
+      <div class="input-field">
+        <input type="text" required />
+        <label>Entrez votre email</label>
+      </div>
+      <div class="input-field">
+        <input type="password" required />
+        <label>Entrez votre mot de passe</label>
+      </div>
+      <div class="forget">
+        <label for="remember">
+          <input type="checkbox" id="remember" />
+          <p>Se souvenir de moi</p>
+        </label>
+        <a href="#">Mot de passe oublié ?</a>
+      </div>
+      <button type="submit">Connexion</button>
+      <div class="register">
+        <p>Vous n'avez pas de compte ? <a href="{% url 'register' %}" >Inscrivez-vous</a></p>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
