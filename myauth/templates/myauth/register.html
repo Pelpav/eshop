@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Inscription{% endblock title %}
+
+{% block extraStyle %}
+    <link href="{% static 'css/auth.css' %}" rel="stylesheet">
+{% endblock extraStyle %}
+
+{% block content %}
+<div class="body_auth">
+  <div class="wrapper">
+    <form action="#">
+      <h2>Inscription</h2>
+        <div class="input-field">
+        <input type="text" required>
+        <label>Entrez votre email</label>
+      </div>
+      <div class="input-field">
+        <input type="password" required>
+        <label>Entrez votre mot de passe</label>
+      </div>
+      <div class="input-field">
+        <input type="password" required>
+        <label>Confirmez votre mot de passe</label>
+      </div>
+      <div class="forget">
+        <label for="remember">
+          <input type="checkbox" id="remember">
+          <p>Se souvenir de moi</p>
+        </label>
+      </div>
+      <button type="submit">S'inscrire</button>
+      <div class="register">
+        <p>Vous avez un compte ? <a href="{% url 'login' %}">Se connecter</a></p>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock content %}

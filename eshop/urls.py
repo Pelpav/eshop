@@ -19,6 +19,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from front import views
+from myauth import views as myauth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,6 +30,8 @@ urlpatterns = [
     path('cart', views.cart, name='cart'),
     path('checkout', views.checkout, name='checkout'),
     path('contact', views.contact, name='contact'),
+    path('login', myauth_views.login, name='login'),
+    path('register', myauth_views.register, name='register'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
