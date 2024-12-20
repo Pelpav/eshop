@@ -44,3 +44,71 @@ class Category(models.Model):
     
     def __str__(self):
         return f"{self.name}"
+    
+
+class Order(models.Model):
+    reference = models.CharField(max_length=30, null=False, blank=False, unique=True)
+    created_at = models.DateTimeField(null=False, blank=False, auto_now=True)
+    completed = models.BooleanField(default=False, null=True, blank=False)
+    products = models.ManyToManyField("Product", related_name="orders", through='OrderDetails')
+
+    class Meta:
+        ordering = ["-created_at", "reference"]
+
+    def __str__(self):
+        return f"{self.reference}"
+    
+
+class OrderDetails(models.Model):
+    order = models.ForeignKey("Order", null=True, blank=False, on_delete=models.SET_NULL)
+    product = models.ForeignKey("Product", null=True, blank=False, on_delete=models.SET_NULL)
+    quantity = models.SmallIntegerField(default=1, null=False, blank=False)
+    price = models.FloatField(null=False, blank=False)
+
+    class Meta:
+        verbose_name = "Order details"
+        verbose_name_plural = "Orders details"
+
+    def __str__(self):
+        return f"{self.order.reference} : {self.product.name} x {self.quantity}"
+    
+
+class Arrival(models.Model):
+    created_at = models.DateTimeField(null=False, blank=False, auto_now=True)
+    closed_at = models.DateTimeField(null=False, blank=False, auto_now=True)
+    is_closed = models.BooleanField(default=False, null=True, blank=False)
+    products = models.ManyToManyField("Product", related_name="arrivals", 
+                                      through='ArrivalDetails')
+
+    class Meta:
+        ordering = ["-created_at", ]
+
+    def __str__(self):
+        return f"{self.id}"
+
+
+class ArrivalDetails(models.Model):
+    arrival = models.ForeignKey("Arrival", null=True, blank=False, on_delete=models.SET_NULL)
+    product = models.ForeignKey("Product", null=True, blank=False, on_delete=models.SET_NULL)
+    quantity = models.SmallIntegerField(default=1, null=False, blank=False)
+
+    class Meta:
+        verbose_name = "Arrival details"
+        verbose_name_plural = "Arrivals details"
+
+    def __str__(self):
+        return f"{self.arrival.id} : {self.product.name} x {self.quantity}"
+    
+
+class Payment(models.Model):
+    reference = models.CharField(max_length=64, null=False, blank=False, unique=True)
+    order = models.OneToOneField('Order', on_delete=models.PROTECT, related_name='payment')
+    payed_at = models.DateTimeField(null=False, blank=False, auto_now_add=True)
+    mode = models.CharField(max_length=30, default='Cash', null=False, blank=False)
+    details = models.TextField(max_length=255, null=True, blank=True)
+    class Meta:
+        ordering = ["-payed_at", "reference"]
+
+    def __str__(self):
+        return f"Payment of {self.order} at {self.payed_at.strftime('%Y-%m-%d')}"
+    
