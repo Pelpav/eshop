@@ -16,3 +16,12 @@ class Product(models.Model):
     
     def __str__(self):
         return f"{self.id} : {self.name}"
+    
+
+class Image(models.Model):
+    name = models.CharField(max_length=30, null=False, blank=False)
+    file = models.ImageField(null=False, blank=True, upload_to="images/products/")
+    product = models.ForeignKey("Product", on_delete=models.CASCADE, related_name="images")
+    
+    def __str__(self):
+        return f"{self.name} de {self.product.name}"
