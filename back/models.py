@@ -12,7 +12,18 @@ class Product(models.Model):
     created_at=models.DateTimeField(auto_now_add=True,null=False,blank=True)
 
     class Meta:
-        ordering=["created_at","name"]
+        ordering=["-created_at","name"]
     
     def __str__(self):
         return f"{self.id}:{self.name}"
+    
+    
+class Image(models.Model):
+    name=models.CharField(max_length=255, null=False, blank=False)
+    product=models.ForeignKey(Product,on_delete=models.CASCADE,related_name="images")
+    file=models.ImageField(null=False, blank=True, upload_to="images/products")
+    
+    def __str__(self):
+        return f"{self.product.name} - {self.name}"
+
+
