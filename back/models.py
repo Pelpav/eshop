@@ -10,6 +10,8 @@ class Product(models.Model):
     active = models.BooleanField(default=True, null=False, blank=True)
     likes = models.IntegerField(default=0, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, null=False, blank=True)
+    category = models.ForeignKey('Category', null=True, blank=False,
+                                 on_delete=models.SET_NULL, related_name='products')
     
     class Meta:
         ordering = ["-created_at", "name"]
@@ -25,3 +27,20 @@ class Image(models.Model):
     
     def __str__(self):
         return f"{self.name} de {self.product.name}"
+    
+
+class Category(models.Model):
+    name = models.CharField(max_length=45, null=False, blank=False, unique=True)
+    slug = models.CharField(max_length=50, null=False, blank=False, unique=True)
+    active = models.BooleanField(default=True, null=False, blank=False)
+    created_at = models.DateTimeField(null=False, blank=False, auto_now_add=True)
+    image = models.ImageField(null=True, blank=True, upload_to='images/categories/')
+    parent = models.ForeignKey('Category', null=True, blank=True, 
+                               related_name='subcategories', on_delete=models.SET_NULL)
+    
+    class Meta:
+        verbose_name_plural = "categories"
+        ordering = ["-created_at", "name"]
+    
+    def __str__(self):
+        return f"{self.name}"
