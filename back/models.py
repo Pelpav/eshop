@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils.safestring import mark_safe
+
 
 class Product(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False, unique=True)
@@ -18,6 +20,17 @@ class Product(models.Model):
     
     def __str__(self):
         return f"{self.id} : {self.name}"
+
+    @property
+    def promo_price(self):
+        return self.price + self.price * 0.09
+
+    @property
+    def first_image(self):
+        if self.images.all():
+            return self.images.all()[0].file.url
+        else:
+            return ''
     
 
 class Image(models.Model):
@@ -27,6 +40,15 @@ class Image(models.Model):
     
     def __str__(self):
         return f"{self.name} de {self.product.name}"
+
+    @property
+    def img_display(self):
+        return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+                url = self.file.url,
+                width=50,
+                height=50,
+            )
+        ) 
     
 
 class Category(models.Model):
