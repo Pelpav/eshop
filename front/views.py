@@ -6,9 +6,15 @@ def home(request):
     # return HttpResponse("<h1>Bienvenue</h1>")
     categories = Category.objects.filter(active=True)
     products = Product.objects.filter(active=True).order_by('name')
+    arrivals = Arrival.objects.filter(is_closed=False)
+    arrivals_details = []
+    for arrival in arrivals:
+        arrivals_details += list(ArrivalDetails.objects.filter(arrival=arrival))
+
     context = {
         # 'categories': categories,
-        'products': products 
+        'products': products,
+        'arrivals_details': arrivals_details
     }
     return render(request, 'front/index.html', context)
 

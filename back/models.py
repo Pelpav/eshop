@@ -108,6 +108,10 @@ class Arrival(models.Model):
     def __str__(self):
         return f"{self.id}"
 
+    @property
+    def products_count(self):
+        return self.products.count()
+
 
 class ArrivalDetails(models.Model):
     arrival = models.ForeignKey("Arrival", null=True, blank=False, on_delete=models.SET_NULL)
