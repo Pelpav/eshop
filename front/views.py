@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from back.models import *
 
 def home(request):
@@ -26,6 +27,15 @@ def shop(request, cat_slug='all'):
         products = Product.objects.filter(active=True)
     else:
         products = Product.objects.filter(category__slug=cat_slug, active=True)
+    perpage = request.GET.get('per', 12)
+    paginator = Paginator(products, perpage)
+    page = request.GET.get('page', 1)
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
     context = {
         'products' : products,
     }
