@@ -122,15 +122,15 @@
                         {% for category in categories %}
                             {% if category.subcategories.all %}
                                 <div class="nav-item dropdown dropright">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ category }} <i class="fa fa-angle-right float-right mt-1"></i></a>
+                                    <a href="{% url 'shop' cat_slug=category.slug %}" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ category }} <i class="fa fa-angle-right float-right mt-1"></i></a>
                                     <div class="dropdown-menu position-absolute rounded-0 border-0 m-0">
                                         {% for subcategory in category.subcategories.all %}
-                                            <a href="" class="dropdown-item">{{ subcategory }}</a>
+                                            <a href="{% url 'shop' cat_slug=subcategory.slug %}" class="dropdown-item">{{ subcategory }}</a>
                                         {% endfor %}
                                     </div>
                                 </div>
                             {% elif category.parent == None %}
-                                <a href="" class="nav-item nav-link">{{ category }}</a>
+                                <a href="{% url 'shop' cat_slug=category.slug %}" class="nav-item nav-link">{{ category }}</a>
                             {% endif %}
                         {% endfor %}
                     </div>

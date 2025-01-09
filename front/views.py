@@ -21,8 +21,15 @@ def home(request):
 def details(request):
     return render(request, 'front/details.html', {})
 
-def shop(request):
-    return render(request, 'front/shop.html', {})
+def shop(request, cat_slug='all'):
+    if cat_slug == 'all':
+        products = Product.objects.filter(active=True)
+    else:
+        products = Product.objects.filter(category__slug=cat_slug, active=True)
+    context = {
+        'products' : products,
+    }
+    return render(request, 'front/shop.html', context)
 
 def cart(request):
     return render(request, 'front/cart.html', {})

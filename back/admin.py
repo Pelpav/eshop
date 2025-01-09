@@ -31,6 +31,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ['active', ]
     search_fields = ['id', 'name']
     inlines = [ImageInline]
+    prepopulated_fields = {'slug': ('name',)}
 
 
 @admin.register(Image)
@@ -46,6 +47,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'active', 'image', 'parent']
     search_fields = ['id', 'name']
     list_filter = ['active']
+    prepopulated_fields = {'slug': ('name',)}
 
 
 class ArrivalProductsInline(admin.TabularInline):
