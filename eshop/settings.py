@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'front',
     'myauth',
     'back',
+    'django_countries',
 ]
 
 MIDDLEWARE = [
