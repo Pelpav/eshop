@@ -27,6 +27,14 @@ def shop(request, cat_slug='all'):
         products = Product.objects.filter(active=True)
     else:
         products = Product.objects.filter(category__slug=cat_slug, active=True)
+    query = request.GET.get('q', '')
+    if query:
+        products = products.filter(name__icontains=query)
+    sort = request.GET.get('sort', 'latest')
+    if sort == 'popular':
+        products = products.order_by('-likes_total')
+    elif sort == 'best':
+        products = products.order_by('-reviews_rate')
     perpage = request.GET.get('per', 12)
     paginator = Paginator(products, perpage)
     page = request.GET.get('page', 1)
