@@ -188,7 +188,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center py-4">
-                                    <a class="h6 text-decoration-none text-truncate" href="">{{ product.name }}</a>
+                                    <a class="h6 text-decoration-none text-truncate" href="{% url 'details' prod_slug=product.slug %}">{{ product.name }}</a>
                                     <div class="d-flex align-items-center justify-content-center mt-2">
                                         <h5>{{ product.price|floatformat }} F</h5><h6 class="text-muted ml-2"><del>{{ product.promo_price|floatformat }}</del></h6>
                                     </div>

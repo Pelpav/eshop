@@ -25,7 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('admin/', include('admin_volt.urls')),
     path('', views.home, name='home'),
-    path('details', views.details, name='details'),
+    path('details/<slug:prod_slug>', views.details, name='details'),
     path('shop', views.shop, name='shop'),
     path('shop/<slug:cat_slug>', views.shop, name='shop'),
     path('cart', views.cart, name='cart'),
