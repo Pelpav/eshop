@@ -10,20 +10,32 @@
 {% block content %}
 <div class="body_auth">
   <div class="wrapper">
-    <form action="#">
+    <form action="{% url 'register' %}" method="POST">
+      {% csrf_token %}
       <h2>Inscription</h2>
-        <div class="input-field">
-        <input type="text" required>
-        <label>Entrez votre email</label>
+      {% if form.errors %}
+        <p class="alert alert-danger">Il eut des erreurs, veuillez voir les indications pour les corriger.<p>
+      {% endif %}
+      {% comment %} <div class="input-field">
+        <input type="text" name="username" id="username" required>
+        <label for="username">Entrez votre nom utilisateur</label>
       </div>
       <div class="input-field">
-        <input type="password" required>
-        <label>Entrez votre mot de passe</label>
+        <input type="password" name="password1" id="password1" required>
+        <label for="password1">Entrez votre mot de passe</label>
       </div>
       <div class="input-field">
-        <input type="password" required>
-        <label>Confirmez votre mot de passe</label>
+        <input type="password" name="password2" id="password2" required>
+        <label for="password2">Confirmez votre mot de passe</label>
+      </div> {% endcomment %}
+      <!--Le code en commentaire est equivalent à cette boucle for-->
+      {% for field in form %}
+      <div class="input-field">
+        {{field}}
+        <label class="form-label" for="{{field.id_for_label}}">{{field.label}}</label>
+        <small class='help-text alert-danger'>{{ field.errors }}</small>
       </div>
+      {% endfor %}
       <div class="forget">
         <label for="remember">
           <input type="checkbox" id="remember">
