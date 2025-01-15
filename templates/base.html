@@ -48,8 +48,13 @@
                     <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
                         <div class="dropdown-menu dropdown-menu-right">
+                            {% if not request.user.is_authenticated %}
                             <a class="dropdown-item" href="{% url 'login' %}">Se connecter</a>
                             <a class="dropdown-item" href="{% url 'register' %}">S'inscrire</a>
+                            {% else %}
+                            <a class="dropdown-item" href="{% url 'logout' %}">Se déconnecter</a>
+                            <a class="dropdown-item" href="">Mes informations</a>
+                            {% endif%}
                         </div>
                     </div>
                     <div class="btn-group mx-2">

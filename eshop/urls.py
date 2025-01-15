@@ -20,10 +20,11 @@ from django.conf.urls.static import static
 from django.conf import settings
 from front import views
 from myauth import views as myauth_views
+from django.contrib.auth.views import LoginView, LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('admin/', include('admin_volt.urls')),
+    # path('admin/', include('admin_volt.urls')),
     path('', views.home, name='home'),
     path('details/<slug:prod_slug>', views.details, name='details'),
     path('shop', views.shop, name='shop'),
@@ -31,7 +32,13 @@ urlpatterns = [
     path('cart', views.cart, name='cart'),
     path('checkout', views.checkout, name='checkout'),
     path('contact', views.contact, name='contact'),
-    path('login', myauth_views.login, name='login'),
+    # path('login', myauth_views.login, name='login'),
+    path('login', 
+         view=LoginView.as_view(template_name='myauth/login.html', next_page='home', redirect_authenticated_user=True),
+         name='login'),
+    path('logout', 
+         view=LogoutView.as_view(),
+         name='logout'),
     path('register', myauth_views.register, name='register'),
 ]
 
