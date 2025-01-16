@@ -10,22 +10,26 @@
 {% block content %}
 <div class="body_auth">
   <div class="wrapper">
-    <form action="#">
+    <form method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
       <h2>Login</h2>
-        <div class="input-field">
-        <input type="text" required>
-        <label>Entrez votre email</label>
+      {% if form.errors %}
+        <p class="alert alert-danger">Erreur de login ou mot de passe. Veuillez reessayer!</p>
+      {% endif %}
+      <div class="input-field">
+        <input type="text" name="username" id="username" required>
+        <label for="username">Entrez votre email</label>
       </div>
       <div class="input-field">
-        <input type="password" required>
-        <label>Entrez votre mot de passe</label>
+        <input type="password" name="password" id="password" required>
+        <label for="password">Entrez votre mot de passe</label>
       </div>
       <div class="forget">
         <label for="remember">
           <input type="checkbox" id="remember">
           <p>Se souvenir de moi</p>
         </label>
-        <a href="#">Mot de passe oublié ?</a>
+        <a href="{% url 'forgot_password' %}">Mot de passe oublié ?</a>
       </div>
       <button type="submit">Se connecter</button>
       <div class="register">

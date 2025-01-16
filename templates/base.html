@@ -48,8 +48,16 @@
                     <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
                         <div class="dropdown-menu dropdown-menu-right">
+                            {% if not request.user.is_authenticated %}
                             <a class="dropdown-item" href="{% url 'login' %}">Se connecter</a>
                             <a class="dropdown-item" href="{% url 'register' %}">S'inscrire</a>
+                            {% else %}
+                            <form method="post" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item">Se déconnecter</button>
+                            </form>
+                            <a class="dropdown-item" href="">Mes informations</a>
+                            {% endif%}
                         </div>
                     </div>
                     <div class="btn-group mx-2">
@@ -89,13 +97,13 @@
                 </a>
             </div>
             <div class="col-lg-4 col-6 text-left">
-                <form action="">
+                <form action="{% url 'shop' %}" method="get">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for products">
+                        <input type="text" class="form-control" placeholder="Vous cherchez un produit ?" name="q" required>
                         <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
+                            <button type="submit" class="input-group-text bg-transparent text-primary">
                                 <i class="fa fa-search"></i>
-                            </span>
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -149,7 +157,6 @@
                         <div class="navbar-nav mr-auto py-0">
                             <a href="{% url 'home' %}" class="nav-item nav-link {% if request.path == '/' %}active{% endif %}">Accueil</a>
                             <a href="{% url 'shop' %}" class="nav-item nav-link {% if request.path == '/shop' %}active{% endif %}">Nos produits</a>
-                            <a href="{% url 'details' %}" class="nav-item nav-link {% if request.path == '/details' %}active{% endif %}">Détails du produit</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle {% if request.path == '/cart' or request.path == '/checkout' %}active{% endif %}" data-toggle="dropdown">Pages <i class="fa fa-angle-down mt-1"></i></a>
                                 <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">

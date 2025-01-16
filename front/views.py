@@ -2,20 +2,22 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from back.models import *
+from datetime import datetime
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import Q
 
 def home(request):
-    # return HttpResponse("<h1>Bienvenue</h1>")
+    arrivals = Arrival.objects.filter(is_closed=False)
+    arrivals_details=[]
+    for arrival in arrivals:
+        arrivals_details+=list(ArrivalDetails.objects.filter(arrival=arrival))
+        
     categories = Category.objects.filter(active=True)
     products = Product.objects.filter(active=True).order_by('name')
-    arrivals = Arrival.objects.filter(is_closed=False)
-    arrivals_details = []
-    for arrival in arrivals:
-        arrivals_details += list(ArrivalDetails.objects.filter(arrival=arrival))
-
     context = {
         # 'categories': categories,
-        'products': products,
-        'arrivals_details': arrivals_details
+        'arrivals_details':arrivals_details,
+        'products': products 
     }
     return render(request, 'front/index.html', context)
 
@@ -39,7 +41,8 @@ def shop(request, cat_slug='all'):
     context = {
         'products' : products,
     }
-    return render(request, 'front/shop.html', context)
+    return render(request,"front/shop.html", context)
+
 
 def cart(request):
     return render(request, 'front/cart.html', {})

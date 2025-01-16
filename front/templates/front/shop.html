@@ -153,20 +153,22 @@
                             </div>
                             <div class="ml-2">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Sorting</button>
+                                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Trier par</button>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="#">Latest</a>
-                                        <a class="dropdown-item" href="#">Popularity</a>
-                                        <a class="dropdown-item" href="#">Best Rating</a>
+                                        {% with path=request.get_full_path %}
+                                            <a class="dropdown-item" href="{{path|set_get_param:'sort=latest'}}">Récent</a>
+                                            <a class="dropdown-item" href="{{path|set_get_param:'sort=popular'}}">Populaire</a>
+                                            <a class="dropdown-item" href="{{path|set_get_param:'sort=best'}}">Meilleur note</a>
+                                        {% endwith %}
                                     </div>
                                 </div>
                                 <div class="btn-group ml-2">
-                                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Showing</button>
+                                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Afficher par</button>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         {% with path=request.get_full_path %}
-                                            <a class="dropdown-item" href="{{path|set_get_param:'per=6'}}">6</a>
-                                            <a class="dropdown-item" href="{{path|set_get_param:'per=21'}}">21</a>
-                                            <a class="dropdown-item" href="{{path|set_get_param:'per=30'}}">30</a>
+                                            <a class="dropdown-item" href="{{path|set_get_param:'per=12'}}">6</a>
+                                            <a class="dropdown-item" href="{{path|set_get_param:'per=24'}}">24</a>
+                                            <a class="dropdown-item" href="{{path|set_get_param:'per=36'}}">36</a>
                                         {% endwith %}
                                     </div>
                                 </div>
@@ -186,7 +188,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center py-4">
-                                    <a class="h6 text-decoration-none text-truncate" href="">{{ product.name }}</a>
+                                    <a class="h6 text-decoration-none text-truncate" href="{% url 'details' prod_slug=product.slug %}">{{ product.name }}</a>
                                     <div class="d-flex align-items-center justify-content-center mt-2">
                                         <h5>{{ product.price|floatformat }} F</h5><h6 class="text-muted ml-2"><del>{{ product.promo_price|floatformat }}</del></h6>
                                     </div>
@@ -201,6 +203,8 @@
                                 </div>
                             </div>
                         </div>
+                    {% empty %}
+                        Aucun produit trouvé !
                     {% endfor %}
                     <div class = "col-12">
                         {% if products.has_other_pages %}
