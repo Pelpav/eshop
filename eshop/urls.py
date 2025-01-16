@@ -40,6 +40,8 @@ urlpatterns = [
          view=LogoutView.as_view(),
          name='logout'),
     path('register', myauth_views.register, name='register'),
+    path('forgot_password', myauth_views.forgot_password, name='forgot_password'),
+    path('updatepassword/<str:token>/<str:uid>', myauth_views.update_password, name='update_password'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
